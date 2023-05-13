@@ -16,4 +16,8 @@ Fire up pry after installing, then:
 ```ruby
 # presumes Mac OS X and the above cable
 a = Auto.detect
+a.debug # toggle on debug mode if you want
+a.error_codes
 ```
+
+You may need to try it more than once to get it to work.
