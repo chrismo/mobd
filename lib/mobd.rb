@@ -55,6 +55,29 @@ class Auto
   end
 
   def error_codes
+    # TODO: This is out of date for newer cars.
+
+    # This is from Gemini after a long chat, it seems consistent, but I haven't
+    # taken the time to trace it back.
+    #
+    # How Length is Handled in CAN (ISO 15765-4)
+    #
+    # The actual length indication for the entire message depends on the
+    # transport layer protocol used:
+    #
+    # Single Frame Message (most common for short messages): The first byte of
+    # the data payload often acts as a length indicator for the entire OBD
+    # message payload that follows it. In your example, if this were the case,
+    # the full message might look like 03 43 01 03 02, where 03 would mean the
+    # following 3 bytes (43 01 03 02) are the payload.
+    #
+    # The specific interpretation for Mode 03: When a vehicle responds to a Mode
+    # 03 request for DTCs, the bytes following the positive response byte (43)
+    # are structured differently. The standard defines the byte 01 as the count
+    # of codes present, not the total length of the remaining data bytes.
+
+    puts "code may be out of date! use debug and dbl-check the byte output!"
+
     result = @obd.send('03').split(' ')
     raise 'First byte should be 43' unless result.shift == '43'
     codes = []
